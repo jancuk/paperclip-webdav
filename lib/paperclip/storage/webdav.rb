@@ -1,6 +1,3 @@
-require "paperclip"
-require "paperclip/storage/webdav/server"
-
 module Paperclip
   module Storage
     module Webdav
@@ -9,13 +6,16 @@ module Paperclip
           if @options[:webdav_servers].blank?
             raise "Webdav servers not set."
           end
-          unless @options[:url].to_s.match(/^:public_host$/)
-            @options[:path]  = @options[:path].gsub(/:url/, @options[:url]).gsub(/^:rails_root\/public\/system\//, '')
-            @options[:url]   = ':public_host'
+          if @options[:public_url].blank?
+            raise "Public URL not set dude"
           end
-          Paperclip.interpolates(:public_host) do |attachment, style|
+          unless @options[:url].to_s.match(/^:public_url$/)
+            @options[:path]  = @options[:path].gsub(/:url/, @options[:url]).gsub(/^:rails_root\/public\/system\//, '')
+            @options[:url]   = ':public_url'
+          end
+          Paperclip.interpolates(:public_url) do |attachment, style|
             attachment.public_url(style)
-          end unless Paperclip::Interpolations.respond_to? :public_host
+          end unless Paperclip::Interpolations.respond_to? :public_url
         end
       end
       
@@ -50,13 +50,13 @@ module Paperclip
       def copy_to_local_file style, local_dest_path
         primary_server.get_file path(style), local_dest_path
       end
-      
-      private
+
       def public_url style = default_style
-        @options[:public_host] ||= URI.parse(@options[:webdav_servers].first)
-        URI.join(@options[:public_host], path(style)).to_s
+        @options[:public_url] ||= URI.parse(@options[:webdav_servers].first[:url])
+        URI.join(@options[:public_url], path(style)).to_s
       end
-      
+
+      private
       def servers
         @webdav_servers ||= begin
           servers = []

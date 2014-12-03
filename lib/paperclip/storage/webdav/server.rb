@@ -8,6 +8,7 @@ module Paperclip
           @url = credentials[:url]
           @username = credentials[:username]
           @password = credentials[:password]
+          @query    = credentials[:query]
         end
         
         def file_exists? path
@@ -34,7 +35,7 @@ module Paperclip
         end
         
         def full_url path
-          URI.join(@url, path).to_s
+          URI.join(@url, path, @query.to_s).to_s
         end
       end
     end
