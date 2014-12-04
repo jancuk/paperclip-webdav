@@ -1,4 +1,6 @@
-# Webdav storage for paperclip
+
+
+HTTP PUT - CDN - Paperclip
 
 Upload [Paperclip](https://github.com/thoughtbot/paperclip) attachments to a remote server via webdav.
 
@@ -6,15 +8,12 @@ Upload [Paperclip](https://github.com/thoughtbot/paperclip) attachments to a rem
 
 Add this line to your application's Gemfile:
 
-    gem 'paperclip-webdav', git: "https://github.com/jancuk/paperclip-webdav.git"
+    gem 'paperclip-webdav', git: 'https://github.com/jancuk/paperclip-webdav.git'
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install paperclip-webdav
 
 ## Usage
 
@@ -53,12 +52,3 @@ end
 ```
 
 #### Or your config/application.rb (config/environments/*.rb):
-
-
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
